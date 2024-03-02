@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Add bank details</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    </head>
+    <body>
+        <form method="POST">
+        {% csrf_token %}
+        <h1>Add your Bank Details</h1>
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Account Number</label>
+              <input type="text" class="form-control" placeholder="Account Number" name="account_number">
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Account Name</label>
+                <input type="text" class="form-control" placeholder="Account Name" name="account_name">
+            </div>
+            <br>
+            <div class="form-group"></div>
+            <label for="exampleInputEmail1">select bank</label>
+            <select class="form-select" aria-label="Default select example" name="bank_name">
+                {% for bank in banks %}
+                <option class="form-group">{{bank.bank_name}}</option>
+                <br>
+                {% endfor %}
+            </select>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Upload Details</button>
+          </form>
+          <br>
+          <br>
+          {% for bank in banks %}
+        <div style="background-color: gray;">
+        <h1>Bank slug: {{bank.name}}</h1>
+        <p>bank code: {{bank.code}}</p>
+        {% if user.is_staff %}
+        <a href="{% url 'edit-bank' bank.pk %}"><button type="submit" class="btn btn-primary">Edit</button></a> <a href="{% url 'delete-bank' bank.pk %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+        {% endif %}
+        </div>
+        <br>
+        <br>
+        {% endfor %}
+          {% for message in messages %}
+          <h1 style="color: red;">{{message}}</h1>
+          {% endfor %}
+
+          {{res_json}}
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
+</html>

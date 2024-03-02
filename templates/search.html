@@ -1,0 +1,358 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>Wale Inverter</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+									{% if ref_by %}
+									<a href="{% url 'home' ref_by %}">Home</a>
+									{% else %}
+                                    <a href="{% url 'home' %}">Home</a>
+									{% endif %}
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'profile' %}">My profile</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    <a href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><h1 style="color: steelblue; font-family: Georgia, 'Times New Roman', Times, serif;">Wale Inverter</h1></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                      {% if user.is_authenticated %}
+                                      <li><a href="{% url 'blog-page' %}">Blog</a></li>
+                                      <li><a href="{% url 'about-us' %}">About</a></li>
+                                      {% if user.is_staff %}
+                                      <li><a href="{% url 'add-product' %}">add Products</a></li>
+                                      <li><a href="{% url 'add-cat' %}">add Category</a></li>
+                                      <li><a href="{% url 'add-offer' %}">add special offer</a></li>
+                                      {% if user.is_superuser %}
+                                      <li><a href="{% url 'paystack-keys' %}">Paystack keys</a></li>
+                                      {% endif %}
+                                      {% endif %}
+                                      <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      <li><a href="{% url 'logout' %}">Logout</a></li>
+                                      {% else %}
+                                      <li><a href="{% url 'blog-page' %}">Blog</a></li>
+                                        {% if ref_by %}
+                                        <li><a href="{% url 'register' ref_by %}">Sign up/Register</a></li>
+                                        <li><a href="{% url 'signin' ref_by %}">Sign in/Login</a></li>
+                                        <li><a href="{% url 'about-us' ref_by %}">About</a></li>
+                                        <li><a href="{% url 'contact' ref_by %}">Contact</a></li>
+                                        {% else %}
+                                        <li><a href="{% url 'register' %}">Sign up/Register</a></li>
+                                        <li><a href="{% url 'signin' %}">Sign in/Login</a></li>
+                                        <li><a href="{% url 'about-us' %}">About</a></li>
+                                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                                        {% endif %}
+                                      {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+
+            <div id="slider">
+                <div class="flexslider">
+                  <ul class="slides">
+                    <li>
+                        <div class="slider-caption">
+                            <h1>We sell</h1>
+                            <p>Inverter, Battery and Solar Panels</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-1.jpg' %}" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                          <h1>We install</h1>
+                          <p>Inverter, Battery and Solar Panels</p>
+                          <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-2.jpg' %}" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                          <h1>We maintain</h1>
+                          <p>Inverter, Battery and Solar Panels</p>
+                          <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-1.jpg' %}" alt="" />
+                    </li>
+                  </ul>
+                </div>
+            </div>
+			{% if ref_by %}
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+                <button type="submit" class="btn btn-primary"><span class="search-icon"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span></button>
+            </form>
+            {% else %}
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+                <button type="submit" class="btn btn-primary"><span class="search-icon"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span></button>
+            </form>
+            {% endif %}
+
+
+            <!-- <div id="services">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Free Website Templates</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                                <h4>Make an order</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-bullhorn"></i>
+                                </div>
+                                <h4>Promotions</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-bell"></i>
+                                </div>
+                                <h4>Ready to Serve</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-heart"></i>
+                                </div>
+                                <h4>Satisfaction</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+
+
+
+            <div id="latest-blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Search: {{search}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      {% for product in products %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="{{product.image.url}}" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                      {% if ref_by %}
+                                      <h4><a href="{% url 'info' pk=product.pk ref_by=ref_by %}">{{product.name}}</a></h4>
+                                      {% else %}
+                                      <h4><a href="{% url 'info' product.pk %}">{{product.name}}</a></h4>
+                                      {% endif %}
+                                        <span>{{product.date}}</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>{{product.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+            {% if testimonies %}
+            <div id="testimonails">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>What Customers Say</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="testimonails-slider">
+                              <ul class="slides">
+                                {% for testimony in testimonies %}
+                                <li>
+                                    <div class="testimonails-content">
+                                        <p>{{testimony.text}}</p>
+                                        <h6>{{testimony.user.first_name}} {{testimony.user.last_name}}</h6>
+                                        {% if testimony.user == request.user %}
+                                        <a href="{% url 'del-comm' testimony.pk %}"><button class="btn btn-danger">Delete Comment</button></a>
+                                        {% elif user.is_staff %}
+                                        <a href="{% url 'del-comm' testimony.pk %}"><button class="btn btn-danger">Delete Comment</button></a>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                            {% if user.is_authenticated %}
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <input name="text" type="text" placeholder="comment about our service to you">
+                                        <button type="submit" class="btn btn-primary">comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            {% if user.is_authenticated %}
+            <div id="testimonails">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Good day Mr/Miss {{request.user.last_name}} would you be the first to testify of our good service?</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input name="text" type="text" placeholder="comment about our service to you">
+                                <button type="submit" class="btn btn-primary">comment</button>
+                            </form>
+                        </div>
+                    </div>
+            {% endif %}
+            {% endif %}
+
+			<footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    
+                                    <ul>
+                                        <li><a href="{{contact.facebook}}" class="fa fa-facebook"></a></li>
+                                        <li><a href="{{contact.twitter}}" class="fa fa-twitter"></a></li>
+                                        <li><a href="{{contact.instagram}}" class="fa fa-instagram"></a></li>
+                                        <li>Whatsapp: {{contact.Whatsapp}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>Office Address: {{contact_info.address}}</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>{{contact_info.telephone}}</li>
+                                        <li><i class="fa fa-globe"></i>{{contact_info.address}}</li>
+                                        <li><i class="fa fa-envelope"></i><a href="{{contact_info.email}}">{{contact_info.email}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>Copyright © 2024 <a href="#">waleinverter.com</a></p>
+                    </div>
+                    
+                </div>
+            </footer>
+
+    
+        <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </body>
+</html>

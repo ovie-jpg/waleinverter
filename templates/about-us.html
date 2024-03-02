@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>WWATECH Engineering</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><img src="{% static 'images/wwatech-logo.png' %}" title="wwatech Template" alt="wwatech logo"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                    {% if user.is_authenticated %}
+                                    <li><a href="{% url 'home' %}">Home</a></li>
+                                    <li><a href="{% url 'about-us' %}">About</a></li>
+                                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                    {% if user.is_staff %}
+                                    <li><a href="{% url 'add-about' %}">upload company info</a></li>
+                                    <li><a href="{% url 'add-staff' %}">add staff</a></li>
+                                    {% if contact == None %}
+                                    <li><a href="{% url 'add-social' %}">Add Social handles</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'edit-social' contact.pk %}">Edit Social handles</a></li>
+                                    {% endif %}
+                                    {% if contact_info == None %}
+                                    <li><a href="{% url 'add-address' %}">Add company Address</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'edit-address' contact_info.pk %}">Edit Company Address</a></li>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% else %}
+                                      {% if ref_by %}
+                                      <li><a href="{% url 'home' ref_by %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' ref_by %}">About</a></li>
+                                      <li><a href="{% url 'contact' ref_by %}">Contact</a></li>
+                                      <li><a href="{% url 'register' ref_by %}">Sign up/Register</a></li>
+                                      <li><a href="{% url 'signin' ref_by %}">Sign in/Login</a></li>
+                                      {% else %}
+                                      <li><a href="{% url 'home' %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' %}">About</a></li>
+                                      <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      <li><a href="{% url 'register' %}">Sign up/Register</a></li>
+                                      <li><a href="{% url 'signin' %}">Sign in/Login</a></li>
+                                      {% endif %}
+                                    {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
+            <div id="heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-content">
+                                <h2>About Us</h2>
+                                <span>Home / <a href="{% url 'about-us' %}">About us</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="timeline-post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Who We Are</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    {% for about in abouts %}
+                    <div class="row">
+                        <div class="col-md-2 col-sm-4">
+                            <div class="timeline-thumb">
+                                <div class="thumb">
+                                    <img src="{{about.image.url}}" alt="">
+                                </div>
+                             </div>
+                        </div>
+                        {% if about.video %}
+                        <div class="row">
+                            <div class="col-md-2 col-sm-4">
+                                <div class="timeline-thumb">
+                                    <div class="thumb">
+                                        <video width="640" height="360" controls>
+                                            <source src="{{about.video.url}}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        	<h3>{{about.title}}</h3>
+                            <p>{{about.description}}</p>
+                            {% if user.is_staff %}
+                            <a href="{% url 'edit-about' about.pk %}"><button class="btn btn-primary">Edit</button></a>
+                            <a href="{% url 'del-about' about.pk %}"><button class="btn btn-danger">Delete</button></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="space50"></div>
+                </div>
+            </div>
+
+
+            <div id="our-team">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Our Team</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="authors">
+                            {% for staff in staffs %}
+                            <div class="col-md-3 col-sm-6">
+                                <div class="team-thumb">
+                                    <div class="author">
+                                        <img src="{{staff.image.url}}" alt="Tracy - templatemo">
+                                    </div>
+                                    <div class="overlay">
+                                        <div class="author-caption">
+                                            <ul>
+                                                <li><a href="{{staff.email}}"><i class="fa fa-envelope"></i><center><p style="color: orangered;">{{staff.email}}</p></center></a></li>
+                                            </ul>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="author-details">
+                                     <h2>{{staff.name}}</h2>
+                                     <span>{{staff.position}}</span>
+                                 </div>
+                                 {% if user.is_staff %}
+                                 <a href="{% url 'edit-staff' staff.pk %}"><button class="btn btn-primary">Edit details</button></a> <a href="{% url 'del-staff' staff.pk %}"><button class="btn btn-danger">Delete Details</button></a>
+                                 {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    
+                                    <ul>
+                                        <li><a href="{{contact.facebook}}" class="fa fa-facebook"></a></li>
+                                        <li><a href="{{contact.twitter}}" class="fa fa-twitter"></a></li>
+                                        <li><a href="{{contact.instagram}}" class="fa fa-instagram"></a></li>
+                                        <li>Whatsapp: {{contact.Whatsapp}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>Office Address: {{contact_info.address}}</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>{{contact_info.telephone}}</li>
+                                        <li><i class="fa fa-globe"></i>{{contact_info.address}}</li>
+                                        <li><i class="fa fa-envelope"></i><a href="{{contact_info.email}}">{{contact_info.email}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Business Hours</h4>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Monday: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>TUESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>WEDNESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>THURSDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>FRIDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SAT: 8:00AM-4:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SUN: closed</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>Copyright © 2024 <a href="#">wwatech.com</a></p>
+                    </div>
+                    
+                </div>
+            </footer>
+
+            <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+            <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+            <script src="{% static 'js/plugins.js' %}"></script>
+            <script src="{% static 'js/main.js' %}"></script>
+
+    </body>
+</html>

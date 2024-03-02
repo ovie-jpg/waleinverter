@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>WWATECH Engineering</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                            
+                            </div>
+                            <div class="col-md-6">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><img src="{% static 'images/wwatech-logo.png' %}" title="wwatech Template" alt="wwatech logo">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                    {% if user.is_authenticated %}
+                                    <li><a href="{% url 'home' %}">Home</a></li>
+                                    <li><a href="{% url 'about-us' %}">About</a></li>
+                                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                    {% else %}
+                                      {% if ref_by %}
+                                      <li><a href="{% url 'home' ref_by %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' ref_by %}">About</a></li>
+                                      <li><a href="{% url 'contact' ref_by %}">Contact</a></li>
+                                      <li><a href="{% url 'register' ref_by %}">Sign up/Register</a></li>
+                                      <li><a href="{% url 'signin' ref_by %}">Sign in/Login</a></li>
+                                      {% else %}
+                                      <li><a href="{% url 'home' %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' %}">About</a></li>
+                                      <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      <li><a href="{% url 'register' %}">Sign up/Register</a></li>
+                                      <li><a href="{% url 'signin' %}">Sign in/Login</a></li>
+                                      {% endif %}
+                                    {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
+            <div id="heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-content">
+                                <h2>Contact Us</h2>
+                                <span>Home / <a href="contact-us.html">Contact Us</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="product-post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Feel free to send a message</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contact-us">
+                        <div class="container">
+                            <div class="row">
+                                <div class="product-item col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">  
+                                            <div class="message-form">
+                                                <form method="POST" class="send-message">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                    <div class="name col-md-4">
+                                                        <input type="text" name="name" id="name" placeholder="Name" />
+                                                    </div>
+                                                    <div class="email col-md-4">
+                                                        <input type="text" name="email" id="email" placeholder="Email" />
+                                                    </div>
+                                                    <div class="subject col-md-4">
+                                                        <input type="text" name="subject" id="subject" placeholder="Subject" />
+                                                    </div>
+                                                    </div>
+                                                    <div class="row">        
+                                                        <div class="text col-md-12">
+                                                            <textarea name="message_send" placeholder="Message"></textarea>
+                                                        </div>   
+                                                    </div>                              
+                                                    <div class="send">
+                                                        <button type="submit">Send</button>
+                                                    </div>
+                                                </form>
+                                                {% for message in messages %}
+                                                {{messages}}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="info">
+                                                <p>{{contact_info.address}}</p>
+                                                <ul>
+                                                    <li><i class="fa fa-phone"></i>{{contact_info.telephone}}</li>
+                                                    <li><i class="fa fa-globe"></i>{{contact_info.address}}</li>
+                                                    <li><i class="fa fa-envelope"></i><a href="{{contact_info.email}}">{{contact_info.email}}</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="social-bottom">
+                                                    <span>Follow us:</span>
+                                                    <ul>
+                                                        <li><a href="{{contact.facebook}}" class="fa fa-facebook"></a></li>
+                                                        <li><a href="{{contact.twitter}}" class="fa fa-twitter"></a></li>
+                                                        <li><a href="{{contact.instagram}}" class="fa fa-instagram" style="color: orange;"></a></li>
+                                                        <li>Whatsapp: {{contact.Whatsapp}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+            <footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    <ul>
+                                        <li><a href="{{contact.facebook}}" class="fa fa-facebook"></a></li>
+                                        <li><a href="{{contact.twitter}}" class="fa fa-twitter"></a></li>
+                                        <li><a href="{{contact.instagram}}" class="fa fa-instagram"></a></li>
+                                        <li>Whatsapp: {{contact.Whatsapp}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>Office Address: {{contact_info.address}}</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>{{contact_info.telephone}}</li>
+                                        <li><i class="fa fa-globe"></i>{{contact_info.address}}</li>
+                                        <li><i class="fa fa-envelope"></i><a href="{{contact_info.email}}">{{contact_info.email}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Business Hours</h4>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Monday: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>TUESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>WEDNESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>THURSDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>FRIDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SAT: 8:00AM-4:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SUN: closed</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>Copyright © 2024 <a href="#">wwatech.com</a></p>
+                    </div>
+                    
+                </div>
+            </footer>
+
+        <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&amp;sensor=false">
+        </script>
+                
+        <script>
+		
+		var map;
+		
+        function initialize()
+        {
+			var map_options = {
+			  center: new google.maps.LatLng(16.8496189,96.1288854),
+			  zoom: 15,
+			  mapTypeId:google.maps.MapTypeId.ROADMAP
+			  };
+			var map = new google.maps.Map(document.getElementById("googleMap"), map_options);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+		google.maps.event.addDomListener(window, "resize", function() 
+		{
+		 	var center = map.getCenter();
+		 	google.maps.event.trigger(map, "resize");
+		 	map.setCenter(center); 
+		});
+        </script>
+
+    </body>
+</html>

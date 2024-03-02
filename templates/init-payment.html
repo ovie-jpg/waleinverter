@@ -1,0 +1,97 @@
+{%load static %}
+<!DOCTYPE html>
+<html>
+{% load crispy_forms_tags %}
+    <head>
+        <title>Paystack</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+      <center>
+      <div class="col-md-4">
+        <div class="product-item">
+          <div class="down-content">
+            <a href="#"><h4>{{payment.product}}</h4></a>
+            <h6>₦{{payment.amount}}</h6>
+            <p>{{payment.transaction}}</p>
+            <small>Ref number: <span>{{payment.ref}}</span></small>
+            <p>Date: {{payment.date}}</p>
+            </div>
+        </div>
+      </div>
+      <br>
+      <br>
+          {% if redirect == False %}
+          <form id="paymentForm">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-primary" onclick= "payWithPaystack()"">Pay with card</button>
+          </form>
+          <br>
+          <br>
+          {% elif redirect == True %}
+          <h5>Click to finalize and verify your order</h5>
+          <a href="{% url 'verify-payment' payment.ref %}"><button class="btn btn-primary">Verify payment</button></a>
+          {% endif %}
+          <script src="https://js.paystack.co/v1/inline.js"></script>
+        </center>
+        
+<script>
+const paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener("submit", payWithPaystack, false);
+
+function payWithPaystack(e) {
+  e.preventDefault();
+
+  let handler = PaystackPop.setup({
+    key: '{{public_key}}', // Replace with your public key
+    email: '{{payment.email}}',
+    amount: '{{payment.amount}}' * 100,
+    ref: '{{payment.ref}}',
+    // label: "Optional string that replaces customer email"
+    onClose: function(){
+      alert('Window closed.');
+    },
+    callback: function(response){
+      window.location.href= "{% url 'verify-payment' payment.ref %}";
+    }
+  });
+
+  handler.openIframe();
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+    <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+</body>
+</html>

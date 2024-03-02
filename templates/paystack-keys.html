@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>Wale Inverter</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="{% url 'home' %}">Home</a>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'profile' %}">My profile</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><h1 style="color: steelblue; font-family: Georgia, 'Times New Roman', Times, serif;">Wale Inverter</h1></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                    {% if paystack is not None %}
+                                      <li><a href="{% url 'paystack-edit' paystack.pk %}">Edit paystack keys</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'paystack' %}">Upload paystack keys</a></li>
+                                    {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+
+            <div id="slider">
+                <div class="flexslider">
+                  <ul class="slides">
+                    <li>
+                        <div class="slider-caption">
+                            <h1>We sell</h1>
+                            <p>Inverter, Battery and Solar Panels</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-1.jpg' %}" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                          <h1>We install</h1>
+                          <p>Inverter, Battery and Solar Panels</p>
+                          <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-2.jpg' %}" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                          <h1>We maintain</h1>
+                          <p>Inverter, Battery and Solar Panels</p>
+                          <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-1.jpg' %}" alt="" />
+                    </li>
+                  </ul>
+                </div>
+            </div>
+
+
+            <div id="services">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Paystack Keys (Note: Do not expose to anyone)</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    {% if paystack is not None %}
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-key"></i>
+                                </div>
+                                <h4>Remember not to share to avoid being hacked</h4>
+                                <h6>secret key:</h6><p>{{paystack.secret_key}}</p>
+                                <h6>public key:</h6><p>{{paystack.public_key}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-key"></i>
+                                </div>
+                                <h4>Upload your Paystack keys</h4>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+
+
+            
+
+
+
+			
+
+    
+        <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </body>
+</html>

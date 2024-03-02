@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+{% load crispy_forms_tag %}
+    <head>
+        <title>make payment</title>
+    </head>
+    <body>
+        <form>
+            {% csrf_token %}
+            <h1>PROCEED TO PAY</h1>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </body>
+</html>

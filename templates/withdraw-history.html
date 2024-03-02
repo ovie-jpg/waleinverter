@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WWATECH Engineering</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+  <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+  <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+  <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+  <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+</head>
+
+<body>
+<div id="main-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="logo">
+                    <a href="#"><h1 style="color: steelblue; font-family: Georgia, 'Times New Roman', Times, serif;">WWATECH Engineering</h1></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="main-menu">
+                    <ul>
+                      <li><a href="{% url 'profile' %}">Back to profile</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<center><h1>withdrawals made</h1></center>
+<br>
+<br>
+{% if transfers %}
+          {% for transfer in transfers %}
+          <div class="col-md-4">
+            <div class="product-item">
+              <div class="down-content">
+                <a href="#"><h4>{{transfer.account_name}}</h4></a>
+                <h6>₦{{transfer.amount}}</h6>
+                <p>Bank: {{transfer.recipient}}</p>
+                <small>Ref number: <span>{{transfer.transfer_code}}</span></small>
+                <p>Date: {{transfer.date}}</p>
+                <h1 style="color: green;">{{transfer.status}}</h1>
+                {% if transfer.status == 'unconfirmed' %}
+                <a href="{% url 'withdraw' transfer.pk %}"><button class="btn btn-primary">withdraw</button></a>
+                {% elif transfer.status == 'successful' %}
+                <h1>Successful</h1>
+                {% else %}
+                <h1>check your details and try again</h1>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+          {% endfor %}    
+{% else %}
+<h1 style="color: red;">No withdrawals made</h1>
+{% endif %}
+
+{% if use.is_staff %}
+{% if transfer1s %}
+          {% for transfer1 in transfer1s %}
+          <div class="col-md-4">
+            <div class="product-item">
+              <div class="down-content">
+                <a href="#"><h4>{{transfer1.account_name}}</h4></a>
+                <h6>₦{{transfer1.amount}}</h6>
+                <p>Bank: {{transfer1.recipient}}</p>
+                <small>Ref number: <span>{{transfer1.transfer_code}}</span></small>
+                <p>Date: {{transfer1.date}}</p>
+                <h1 style="color: green;">{{transfer.status}}</h1>
+                {% if transfer1.status == 'unconfirmed' %}
+                <a href="{% url 'withdraw' transfer.pk %}"><button class="btn btn-primary">withdraw</button></a>
+                {% elif transfer1.status == 'successful' %}
+                <h1>Successful</h1>
+                {% else %}
+                <h1>check your details and try again</h1>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+          {% endfor %}    
+{% else %}
+<h1 style="color: red;">No withdrawals made</h1>
+{% endif %}
+{% endif %}
+
+
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+          
+          </div>
+          
+        <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+          
+
+  </body>
+
+</html>

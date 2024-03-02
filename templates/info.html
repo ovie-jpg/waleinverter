@@ -1,0 +1,356 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>WWATECH</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="{% url 'home' %}">Home</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><img src="{% static 'images/wwatech-logo.png' %}" title="wwatech Template" alt="wwatech logo"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                      {% if user.is_authenticated %}
+                                      <li><a href="{% url 'home' %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' %}">About</a></li>
+                                      {% if user.is_staff %}
+                                      <li><a href="{% url 'add-product' %}">add Products</a></li>
+                                      <li><a href="{% url 'add-cat' %}">add Category</a></li>
+                                      {% endif %}
+                                      <li><a href="{% url 'profile' %}">Profile</a></li>
+                                      <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      <li><a href="{% url 'logout' %}">Logout</a></li>
+                                      {% else %}
+                                      {% if ref_by %}
+                                      <li><a href="{% url 'home' ref_by %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' ref_by %}">About</a></li>
+                                      <li><a href="{% url 'contact' ref_by %}">Contact</a></li>
+                                      <li><a href="{% url 'register' ref_by %}">Sign up/Register</a></li>
+                                      <li><a href="{% url 'signin' ref_by %}">Sign in/Login</a></li>
+                                      {% else %}
+                                      <li><a href="{% url 'home' %}">Home</a></li>
+                                      <li><a href="{% url 'about-us' %}">About</a></li>
+                                      <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      <li><a href="{% url 'register' %}">Sign up/Register</a></li>
+                                      <li><a href="{% url 'signin' %}">Sign in/Login</a></li>
+                                      {% endif %}
+                                      {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="search-box">  
+                                    <form name="search_form" method="get" class="search_form">
+                                        <input id="search" type="text" />
+                                        <input type="submit" id="search-button" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-content">
+                                <span>Home / <a href="">Single Post</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div id="product-post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>{{product.name}}</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="single-blog" class="page-section first-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="product-item col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">  
+                                            <div class="team-thumb">
+                                                <div class="author">
+                                                    <div class="image-post">
+                                                        <img src="{{product.image.url}}" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-title">
+                                                        <h3>{{product.name}}</h3>
+                                                        <span class="subtitle">{{product.quantity}} left</span>
+                                                    </div>
+                                                    <p>{{product.description}}</p>
+                                                    {% if profilez is not None %}
+                                                    {% if product.commission %}
+                                                    <p><b>Referall comission available:</b> {{product.commission}}%</p>
+                                                    <p><b>copy your referral link to earn {{product.commission}}% of this product:</b> www.wwatech.com/info/{{product.pk}}/{{profilez.code}}</p>
+                                                    {% if product.ref_discount %}
+                                                    <p><b>Anyone you refer gets a:</b> {{product.ref_discount}}% discount</p>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% if product.discount is not None %}
+                                                    <small>Price:</small><strike><h1>₦{{product.price}}</h1></strike>
+                                                    <small>discount Price:</small><h1>₦{{product.discount}}</h1>
+                                                    <h4>Valid till: {{offer.valid_till}}</h4>
+                                                    {% else %}
+                                                    <small>Price:</small><h1>₦{{product.price}}</h1>
+                                                    {% endif %}
+                                                    <h7 style="color: green;">{{mess}}</h7>
+
+                {% if user.is_authenticated %}
+                    {% if carts is not None %}
+                    {% for cart in carts %}
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <h2>{{cart.name}}</h2>
+                                <h4>List of items</h4>
+                                {% if cart.product.all %}
+                                
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in cart.product.all %}
+                                    <tr>
+                                        <th scope="row"><p>{{item.product}}</p></th>
+                                        <th><p>₦{{item.price}}</p></th>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                    <th>Total:</th>
+                                    <th><p>₦{{total_price}}</p></th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                <h9>No product added</h9>
+                                {% endif %}
+                            </div> 
+                                <a href="{% url 'init-cart' pk=product.pk %}"><button class="btn btn-primary">Add to / Remove from Cart</button></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h3>You dont have a shopping cart <a href="{% url 'cart' %}">click to create</a></h3>
+                    {% endif %}
+                {% else %}
+                <h1 style="color: red;">Log in to add to Cart</h1>
+                {% endif %}                                    <!-- <p>seconds left: {{seconds}}</p> -->
+                                                     <p>{{today}}</p>
+                                                    <div class="row">
+                                                        <form method="POST">
+                                                            {% csrf_token %}
+                                                            <label>State quantity you want to purchase</label>
+                                                            <input type="number" class="form-control" placeholder="Quantity" name="quantity" value="1">
+                                                            <br>
+                                                            <br>
+                                                            <button type="submit" class="btn btn-primary">purchase now</button>
+                                                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+                                                        </form>
+                                                    </div>
+                                                    {% for message in messages %}
+                                                    <h1 style="color: red;">{{message}}</h1>
+                                                    {% endfor %}
+                                                    <br>
+                                                    <br>
+{% if user.is_staff %}
+<a href="{% url 'edit-product' pk=product.pk %}"><button class="btn btn-primary">Edit Product</button></a>
+<a href="{% url 'delete-product' pk=product.pk %}"><button class="btn btn-danger">Delete product</button></a>
+{% endif %}
+
+{% if offer == '' %}
+        {% for offer in offers %}
+        <h1>{{offer.discount_percentage}}% offer</h1>
+        <p>Valid till: {{offer.valid_till}} (deletes automaically after date)</p>
+        <a href="{% url 'offer-info' pk=product.pk pk2=offer.pk %}">
+            <button class="btn btn-primary">Add product to offer</button>
+        </a>
+        <br>
+        <br>
+        {% endfor %}
+{% else %}
+        <h1>{{offer.discount_percentage}}% offer</h1>
+        <p>valid till: {{offer.valid_till}} (deletes automaically after date)</p>
+        <a href="{% url 'offer-info' pk=product.pk pk2=offer.pk %}">
+            <button class="btn btn-danger">Remove product from offer</button>
+        </a>
+        <p id="timer">Timer: <span id="countdown"></span> seconds</p>
+        <p>seconds left: {{seconds}}</p>
+
+<script>
+// Function to start the timer
+function startTimer(durationInSeconds, redirectUrl) {
+    var timer = durationInSeconds;
+    var countdownElement = document.getElementById("countdown");
+
+    var countdownInterval = setInterval(function () {
+        timer--;
+
+        countdownElement.textContent = timer;
+
+        if (timer <= 0) {
+            clearInterval(countdownInterval);
+            window.location.href = redirectUrl; // Redirect when timer hits 0
+        }
+    }, 1000);
+}
+
+// Start the timer when the page loads
+window.onload = function () {
+    var redirectTimeInSeconds = '{{seconds}}'; // Change this to set the timer duration in seconds
+    var redirectUrl = "{% url 'auto-delete' pk=offer.pk %}"; // Change this to the URL you want to redirect to
+    startTimer(redirectTimeInSeconds, redirectUrl);
+};
+</script>
+          
+{% endif %}
+
+                                                </div>
+                                        </div>     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+
+
+			<footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    
+                                    <ul>
+                                        <li><a href="{{contact.facebook}}" class="fa fa-facebook"></a></li>
+                                        <li><a href="{{contact.twitter}}" class="fa fa-twitter"></a></li>
+                                        <li><a href="{{contact.instagram}}" class="fa fa-instagram"></a></li>
+                                        <li>Whatsapp: {{contact.Whatsapp}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>Office Address: {{contact_info.address}}</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>{{contact_info.telephone}}</li>
+                                        <li><i class="fa fa-globe"></i>{{contact_info.address}}</li>
+                                        <li><i class="fa fa-envelope"></i><a href="{{contact_info.email}}">{{contact_info.email}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Business Hours</h4>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Monday: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>TUESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>WEDNESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>THURSDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>FRIDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SAT: 8:00AM-4:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SUN: closed</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>Copyright © 2024 <a href="#">wwatech.com</a></p>
+                    </div>
+                    
+                </div>
+            </footer>
+
+        <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </body>
+</html>
