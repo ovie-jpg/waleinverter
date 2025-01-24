@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .models import Product, Category, Profile, Offer, Payment, Bank, Banks, Transfer, PaystackKeys, Profit, Blog, Blog_cat, Cart2, PayCart, Location, EmailSet, Alertmail, About, Socials, CallMeBot, ContactInfo, Staff, Reset, WhatsappReset, InstructionBot, Permission, Permissions, Testimony, WithdrawProfit, CompanyAccount, ProductCart
+from .models import Product, Category, Profile, Offer, Payment, Bank, Banks, Transfer, PaystackKeys, Profit, Blog, Blog_cat, Cart2, PayCart, Location, EmailSet, Alertmail, About, Socials, CallMeBot, ContactInfo, Staff, Reset, WhatsappReset, InstructionBot, Permission, Permissions, Testimony, WithdrawProfit, CompanyAccount, ProductCart, Prod_image, Quote, Quote_image
 import uuid
 from datetime import date, datetime
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -33,6 +33,8 @@ def home(request, **kwargs):
     if ContactInfo.objects.filter(pk=1).exists():
         contact_info= ContactInfo.objects.get(pk=1)
     products= Product.objects.all()
+    for product in products:
+        prod_images= Prod_image.objects.filter(product= product)
     if request.method == 'POST':
         text= request.POST['text']
         testimony= Testimony.objects.create(user=request.user, text=text)
@@ -40,6 +42,7 @@ def home(request, **kwargs):
         return redirect('home')
     context= {
         'products': products,
+        'prod_images': prod_images,
         'abouts': abouts,
         'staffs': staffs,
         'contact': contact,
@@ -143,6 +146,7 @@ def info(request, pk, **kwargs):
         profile= None
     
     product= Product.objects.get(pk=pk)
+    prod_images= Prod_image.objects.filter(product= product)
     mess= ''
     if product.ref_discount and profile is not None:
         mess= f'congrats you qualify for a {product.ref_discount}% discount on this product'
@@ -198,6 +202,7 @@ def info(request, pk, **kwargs):
 
     context= {
         'product': product,
+        'prod_images': prod_images,
         'offers': offers,
         'offer': offer,
         'ref_by': ref_by,
@@ -214,6 +219,189 @@ def info(request, pk, **kwargs):
         'total_price': total_price
     }
     return render(request, "info.html", context)
+
+def add_product_image(request, pk):
+    product= Product.objects.get(pk=pk)
+    if request.method== 'POST':
+        image1= request.FILES['image']
+        prod_image= Prod_image.objects.create(product= product, image= image1)
+        prod_image.save()
+        return redirect('info', product.pk)
+    return render(request, 'add-images.html')
+
+class ChangeImage(UpdateView):
+    model= Prod_image
+    template_name= "change-image.html"
+    fields= ('image',)
+
+class DelImage(DeleteView):
+    model= Prod_image
+    template_name= "del-image.html"
+    success_url= reverse_lazy('home')
+
+def quote_request(request):
+    try:
+        if request.method== 'POST':
+            desc= request.POST['description']
+            image= request.FILES['image']
+            phone= request.POST['phone']
+            quote= Quote.objects.create(user= request.user, first_name= request.user.first_name, last_name= request.user.last_name, email= request.user.email, phone= phone, image= image, quote= desc)
+            quote.save()
+            try:
+                email_owner= None
+                if EmailSet.objects.filter(pk=1).exists():
+                    email_owner= EmailSet.objects.get(pk=1)
+                    alertmails= Alertmail.objects.all()
+                    for alertmail in alertmails:    
+                        # Email configuration
+                        sender_email = email_owner.email_address
+                        receiver_email = alertmail.email_address
+                        password = email_owner.email_password
+
+                        # Create message container
+                        message = MIMEMultipart()
+                        message['From'] = sender_email
+                        message['To'] = receiver_email
+                        message['Subject'] = 'Order Notification'
+
+                        # Email content
+                        body = f'you"ve received a quote order from {request.user.first_name} {request.user.last_name} on the website'
+                        message.attach(MIMEText(body, 'plain'))
+
+                        # Create SMTP session
+                        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                            server.starttls()
+                            server.login(sender_email, password)
+                            text = message.as_string()
+                            server.sendmail(sender_email, receiver_email, text)
+            except:
+                messages.info(request, 'unable to connect to gmail server')
+
+            try:
+                callmebots= CallMeBot.objects.all()
+                for callmebot in callmebots:
+                    phonenumber = f"+{callmebot.phone_number}"
+                    text = f'you"ve received a quote order from {request.user.first_name} {request.user.last_name} on the website'
+                    apikey = callmebot.api_key
+
+                    url = "https://api.callmebot.com/whatsapp.php"
+                    params = {
+                        "phone": phonenumber,
+                        "text": text,
+                        "apikey": apikey
+                    }
+
+                    response = requests.post(url, params=params)
+            except:
+                messages.info(request, 'unable to connect to CallMeBot')
+            return redirect('my-quote')
+    except:
+        messages.info(request, 'log in or sign up to request a quote')
+    return render(request, 'quote-request.html')
+
+@login_required
+def my_quotes(request):
+    quotes= Quote.objects.filter(user=request.user).order_by('-date')
+    context= {
+        'quotes': quotes
+    }
+    return render(request, 'my-quote.html', context)
+
+@login_required
+def quote_list(request):
+    quotes= Quote.objects.all().order_by('-date')
+    context= {
+        'quotes': quotes
+    }
+    return render(request, 'quote-list.html', context)
+
+def quote_info(request, pk):
+    quote= Quote.objects.get(pk=pk)
+    quote_images= Quote_image.objects.filter(quote=quote)
+    if request.method == 'POST':
+        image= request.FILES['image']
+        quote_image= Quote_image.objects.create(quote=quote, image=image)
+        quote_image.save()
+        return redirect('quote-info', quote.pk)
+    context= {
+        'quote_images': quote_images,
+        'quote': quote
+    }
+    return render(request, 'quote-info.html', context)
+
+def staff_price_quote(request, pk):
+    quote= Quote.objects.get(pk=pk)
+    if request.method == 'POST':
+        price= float(request.POST['price'])
+        quote.price= price
+        quote.save()
+        try:
+            email_owner= None
+            if EmailSet.objects.filter(pk=1).exists():
+                email_owner= EmailSet.objects.get(pk=1)
+                # Email configuration
+                sender_email = email_owner.email_address
+                receiver_email = quote.email
+                password = email_owner.email_password
+
+                # Create message container
+                message = MIMEMultipart()
+                message['From'] = sender_email
+                message['To'] = receiver_email
+                message['Subject'] = 'Respnse to Quote Request'
+
+                # Email content
+                body = f'Dear {request.user.first_name} {request.user.last_name}, your quote request stated "{quote.quote}" has been answered with a price of {price}. Log into www.wwatech.com for more info'
+                message.attach(MIMEText(body, 'plain'))
+
+                # Create SMTP session
+                with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                    server.starttls()
+                    server.login(sender_email, password)
+                    text = message.as_string()
+                    server.sendmail(sender_email, receiver_email, text)
+        except:
+            messages.info(request, 'unable to connect to gmail server')
+        return redirect('quote-info', quote.pk)
+    return render(request, 'staff-price.html')
+
+class EditQuote(UpdateView):
+    model= Quote
+    template_name= 'edit-quote.html'
+    fields= ('image', 'quote', 'phone')
+
+class DelQuote(DeleteView):
+    model= Quote
+    template_name= 'delete-quote.html'
+    success_url= reverse_lazy('my-quote')
+
+class EditQuoteImage(UpdateView):
+    model= Quote_image
+    template_name= 'edit-quoteimage.html'
+    fields= ('image',)
+
+class DelQuoteImage(DeleteView):
+    model= Quote_image
+    template_name= 'delete-quoteimage.html'
+    success_url= reverse_lazy('my-quote')
+
+def quote_list_search(request):
+    search= request.GET['search']
+    quotes= Quote.objects.filter(last_name__icontains=search) or Quote.objects.filter(first_name__icontains=search)
+    context= {
+        'search': search,
+        'quotes': quotes
+    }
+    return render(request, "quote-search.html", context)
+
+def quote_search(request):
+    search= request.GET['search']
+    quotes= Quote.objects.filter(quote__icontains=search)
+    context= {
+        'search': search,
+        'quotes': quotes
+    }
+    return render(request, "myquote-search.html", context)
 
 def search(request, **kwargs):
     ref_by= str(kwargs.get("ref_by"))
@@ -258,6 +446,7 @@ def add_product(request):
     category= Category.objects.all()
     if request.method== 'POST':
         image= request.FILES['image']
+        video= request.FILES['video']
         name = request.POST['name']
         description= request.POST['description']
         price= request.POST['price']
@@ -266,7 +455,7 @@ def add_product(request):
         commission= request.POST['commission']
         ref_discount= request.POST['ref_discount']
         if commission== '':
-            product= Product.objects.create(image=image, name=name, description=description, price=price, quantity=quantity, category=category)
+            product= Product.objects.create(image=image, video=video, name=name, description=description, price=price, quantity=quantity, category=category)
             product.save()
             return redirect('home')
         elif ref_discount== '':
@@ -1037,6 +1226,7 @@ def add_address(request):
     if request.method == 'POST':
         location=request.POST['location']
         address= Location.objects.create(user=request.user, location=location)
+        address.save()
         return redirect('profile')
     return render(request, 'add-location.html')
 
@@ -1046,6 +1236,7 @@ def email_setup(request):
         email_address= request.POST['email_address']
         email_password= request.POST['email_password']
         owner_email= EmailSet.objects.create(user=request.user, email_address=email_address, email_password=email_password)
+        owner_email.save()
         return redirect('profile')
     return render(request, 'email-setup.html')
 

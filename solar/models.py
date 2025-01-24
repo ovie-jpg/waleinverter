@@ -12,6 +12,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     image= models.ImageField(upload_to= "media")
+    video= models.FileField(upload_to= "media", blank=True, null=True, default=None)
     name= models.CharField(max_length=150)
     description= models.TextField()
     price= models.IntegerField()
@@ -24,6 +25,28 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
+
+class Prod_image(models.Model):
+    product= models.ForeignKey(Product, on_delete= models.CASCADE)
+    image= models.ImageField(upload_to= "media")
+
+    def get_absolute_url(self):
+        return reverse('home')
+
+class Quote(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name= models.CharField(max_length=30)
+    last_name= models.CharField(max_length=30)
+    email= models.EmailField()
+    phone= models.IntegerField()
+    quote= models.TextField()
+    price= models.IntegerField(null=True, blank=True)
+    image= models.ImageField(upload_to= "media", null=True, blank=True)
+    date= models.DateTimeField(auto_now_add= True)
+
+class Quote_image(models.Model):
+    quote= models.ForeignKey(Quote, on_delete=models.CASCADE)
+    image= models.ImageField(upload_to= "media")
 
 class Offer(models.Model):
     product= models.ManyToManyField(Product, blank= True)

@@ -18,7 +18,7 @@ for cat in blog_cats:
 class ProductEdit(forms.ModelForm):
     class Meta:
         model= Product
-        fields= ('image','name', 'description', 'price', 'quantity', 'category', 'commission', 'ref_discount')
+        fields= ('image', 'video', 'name', 'description', 'price', 'quantity', 'category', 'commission', 'ref_discount')
 
         widgets= {
             'category': forms.Select(choices= choice_list)

@@ -1,0 +1,362 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>WWATECH Engineering</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+        <link rel="stylesheet" href="{% static 'css/testimonails-slider.css' %}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1-respond-1.1.0.min.js' %}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="#">Home</a>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'profile' %}">My profile</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    <a href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="timeline-thumb">
+                                    <div class="thumb">
+                                    <a href="#"><img style="size: 10px;" src="{% static 'images/wwatech-logo.png' %}" title="wwatech Template" alt="wwatech logo"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                      {% if user.is_authenticated %}
+                                      <li><a href="{% url 'my-quote' %}">Previous page</a></li>
+                                      <li><a href="{% url 'about-us' %}">About</a></li>
+                                      {% if user.is_staff %}
+                                      <li><a href="{% url 'add-product' %}">add Products</a></li>
+                                      <li><a href="{% url 'add-cat' %}">add Category</a></li>
+                                      <li><a href="{% url 'add-offer' %}">add special offer</a></li>
+                                      {% if user.is_superuser %}
+                                      <li><a href="{% url 'paystack-keys' %}">Paystack keys</a></li>
+                                      {% endif %}
+                                      {% endif %}
+                                      <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      <li><a href="{% url 'logout' %}">Logout</a></li>
+                                      {% else %}
+                                      <li><a href="{% url 'blog-page' %}">Blog</a></li>
+                                        <li><a href="{% url 'register' %}">Sign up/Register</a></li>
+                                        <li><a href="{% url 'signin' %}">Sign in/Login</a></li>
+                                        <li><a href="{% url 'about-us' %}">About</a></li>
+                                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                                      {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+
+            <div id="slider">
+                <div class="flexslider">
+                  <ul class="slides">
+                    <li>
+                        <div class="slider-caption">
+                            <h1>We sell</h1>
+                            <p>Inverter, Battery and Solar Panels</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-1.jpg' %}" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                          <h1>We install</h1>
+                          <p>Inverter, Battery and Solar Panels</p>
+                          <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-2.jpg' %}" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                          <h1>We maintain</h1>
+                          <p>Inverter, Battery and Solar Panels</p>
+                          <a href="#">Shop Now</a>
+                        </div>
+                      <img src="{% static 'images/carousel-1.jpg' %}" alt="" />
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+                <button type="submit" class="btn btn-primary"><span class="search-icon"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span></button>
+            </form>
+
+            
+
+
+            <!-- <div id="services">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Free Website Templates</h2>
+                                <img src="{% static 'images/under-heading.png' %}" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                                <h4>Make an order</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-bullhorn"></i>
+                                </div>
+                                <h4>Promotions</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-bell"></i>
+                                </div>
+                                <h4>Ready to Serve</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-heart"></i>
+                                </div>
+                                <h4>Satisfaction</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+
+
+
+            <div id="latest-blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Quote Details</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="product-post">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="heading-section">
+                                        <h2>{{product.name}}</h2>
+                                        <img src="{% static 'images/under-heading.png' %}" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="single-blog" class="page-section first-section">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="product-item col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">  
+                                                    <div class="team-thumb">
+                                                        <div class="author">
+                                                            <div class="image-post">
+                                                                <img src="{{quote.image.url}}" alt="">
+                                                            </div>
+                                                    {% for quote_image in quote_images %}
+                                                    <div class="col-md-2 col-sm-4">
+                                                        <div class="timeline-thumb">
+                                                            <div class="thumb">
+                                                                <img style="size: 10px;" src="{{quote_image.image.url}}" alt="">
+                                                                {% if user.is_staff or request.user == quote.user %}
+                                                                <a href="{% url 'edit-quoteimage' quote_image.pk %}"><button class="btn btn-primary">Change Image</button></a>
+                                                                <a href="{% url 'delete-quoteimage' quote_image.pk %}"><button class="btn btn-danger">Delete Image</button></a>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                        </div>
+                                                        <div class="product-content">
+                                                            <div class="product-title">
+                                                                <h3>{{quote.first_name}} {{quote.last_name}}</h3>
+                                                            </div>
+                                                            <p>{{quote.quote}}</p>
+                                                            <small>Price:</small><h1>₦{{quote.price}}</h1>
+                                                            <small>Date: {{quote.date}}</small>
+                                                            <p>phone: {{quote.phone}}</p>
+                                                            <p>email: {{quote.email}}</p>
+                                                        </div>
+                                                </div>
+                                                {% if request.user == quote.user %}
+                                                    <form method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <h1>Upload more pictures for your quote request if you need to</h1>
+                                                        <br>
+                                                        <br>
+                                                        <br>
+                                                            <div class="form-group">
+                                                              <label for="exampleFormControlFile1">Upload image</label>
+                                                              <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+                                                            </div>
+                                            
+                                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                                      </form>
+                                                      <br>
+                                                      <br>
+                                                {% endif %}
+
+                                                {% if request.user == quote.user %}
+                                                <a href="{% url 'edit-quote' quote.pk %}"><button type="submit" class="btn btn-primary">Edit Quote</button></a>
+                                                <a href="{% url 'delete-quote' quote.pk %}"><button type="submit" class="btn btn-danger">Delete Quote</button></a>
+                                                {% elif user.is_staff %}
+                                                <a href="{% url 'edit-quote' quote.pk %}"><button type="submit" class="btn btn-primary">Edit Quote</button></a>
+                                                <a href="{% url 'delete-quote' quote.pk %}"><button type="submit" class="btn btn-danger">Delete Quote</button></a>
+                                                {% endif %}
+                                                <br>
+                                                <br>
+                                                {% if user.is_staff %}
+                                                <div>
+                                                <a href="{% url 'staff-price' quote.pk %}"><button type="submit" class="btn btn-primary">Quote price</button></a>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                      {% for product in products %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <div class="timeline-thumb">
+                                        <div class="thumb">
+                                        <img style="size: 18px;" src="{{product.image.url}}" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                      {% if ref_by %}
+                                      <h4><a href="{% url 'info' pk=product.pk ref_by=ref_by %}">{{product.name}}</a></h4>
+                                      {% else %}
+                                      <h4><a href="{% url 'info' product.pk %}">{{product.name}}</a></h4>
+                                      {% endif %}
+                                        <span>{{product.date}}</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        {% if product.discount %}
+                                        <p>price: <strike>₦{{product.price}}</strike></p>
+                                        <p>discount: ₦{{product.discount}} (offer is limited click for more)</p>
+                                        {% else %}
+                                        <p>₦{{product.price}}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div> -->
+                </div>
+            </div>
+
+
+			<footer>
+                <div class="container">
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Business Hours</h4>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Monday: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>TUESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>WEDNESDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>THURSDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>FRIDAY: 8:00AM - 6:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SAT: 8:00AM-4:00PM</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>SUN: closed</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>Copyright © 2024 <a href="#">wwatech.com</a></p>
+                    </div>
+                    </div>
+                    
+                </div>
+            </footer>
+
+    
+        <script src="{% static 'js/vendor/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </body>
+</html>

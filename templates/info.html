@@ -139,6 +139,35 @@ http://www.templatemo.com/free-website-templates/417-grill
                                                     <div class="image-post">
                                                         <img src="{{product.image.url}}" alt="">
                                                     </div>
+                                                    {% if product.video %}
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-4">
+                                                            <div class="timeline-thumb">
+                                                                <div class="thumb">
+                                                                    <video width="640" height="360" controls>
+                                                                        <source src="{{product.video.url}}" type="video/mp4">
+                                                                    </video>
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% for prod_image in prod_images %}
+                                                    <div class="col-md-2 col-sm-4">
+                                                        <div class="timeline-thumb">
+                                                            <div class="thumb">
+                                                                <img style="size: 10px;" src="{{prod_image.image.url}}" alt="">
+                                                                {% if user.is_staff %}
+                                                                <a href="{% url 'change-image' prod_image.pk %}"><button class="btn btn-primary">Change Image</button></a>
+                                                                <a href="{% url 'del-image' prod_image.pk %}"><button class="btn btn-danger">Delete Image</button></a>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                    {% if user.is_staff %}
+                                                    <a href="{% url 'add-image' pk=product.pk %}"><button class="btn btn-primary">Add more Product Images</button></a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                                 </div>
