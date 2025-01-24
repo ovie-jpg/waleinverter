@@ -243,7 +243,7 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Clothing</a>
+                                        <a href="#">{{product.category}}</a>
                                     </div><!-- End .product-cat -->
                                     {% if ref_by %}
                                     <h3 class="product-title"><a href="{% url 'info' pk=product.pk ref_by=ref_by %}">{{product.name}}</a></h3><!-- End .product-title -->
